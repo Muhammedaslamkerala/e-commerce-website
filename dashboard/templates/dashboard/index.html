@@ -1,0 +1,32 @@
+{%extends 'core/base.html'%}
+{%load static%}
+{%block title%}
+Dashboard
+{%endblock%}
+
+{%block content%}
+   <div class="mt-6 px-6 py-12 bg-light text-dark rounded">
+    <h2 class='text-center'>My items</h2>
+    <div class="container-fluid">
+        <div class="row">
+            {% for item in items %}
+            <div class="col-md-4 ">
+            <a href="{% url 'item:detail' item.id %}">
+                <div class="card m-3" style="width: 18rem;">
+                   
+                    <img src="{{ item.image.url }}" class="card-img-top" alt="..." width="250px" height="250px" >
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ item.name }}</h5>
+                        <p class="card-text">Price: {{ item.price }}</p>
+                        <a href="{% url 'item:detail' item.id %}" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}

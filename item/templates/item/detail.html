@@ -1,0 +1,59 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-7"> 
+		<img src="{{ item.image.url }}" class="rounded"  height="500px">
+	</div>
+	<div class="col-md-5">
+    <h1 class="">{{item.name}}</h1>
+    <p><strong>Price:</strong> {{ item.price }}$</p>
+    <p><strong>Seller:</strong> {{ item.created_by}}</p>
+
+    {% if item.description %}
+	    <p>
+	    	<strong>Description:</strong><br>
+	    	{{ item.description }}
+	    </p>
+    {% endif %}
+
+    {% if request.user == item.created_by%}
+    <div class="bg-white">
+        <P>This is your item!</P>
+
+        <a href="{% url  'item:delete' item.id %}" class="mt-6 px-6 py-3 btn" >Delete</a>
+        <a href="{% url 'item:edit' item.id %}" class="mt-6 px-6 py-3 btn" >Edit</a>
+    </div>
+    {% else %}
+
+    <a href="{% url 'conversation:new' item.id%}" class="btn btn-primary px-6">Contact Seller</a>
+    {% endif %}
+</div>
+
+</div>
+<div class="mt-6 px-6 py-12 bg-light text-dark rounded">
+    <h2 class='text-center'>Related items</h2>
+    <div class="container-fluid">
+        <div class="row">
+            {% for item in related_items %}
+            <div class="col-md-4 ">
+            <a href="{% url 'item:detail' item.id %}">
+                <div class="card m-3" style="width: 18rem;">
+                   
+                    <img src="{{ item.image.url }}" class="card-img-top" alt="..." width="200px" height="250px">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ item.name }}</h5>
+                        <p class="card-text">Price: {{ item.price }}</p>
+                        <a href="{% url 'item:detail' item.id %}" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

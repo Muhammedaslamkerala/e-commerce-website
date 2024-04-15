@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+
+{% block title%}Log in{% endblock %}
+
+{% block content%}
+      <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body mx-auto">
+                    <h1 class="card-title text-center">Login</h1>
+                    <br>
+                    <form method="post">
+                        {% csrf_token %}
+                       
+                        <div class="mb-3">
+                            <label >Username</label>
+                            {{ form.username }}
+                        </div>
+                        <br>
+                
+                        <div class="mb-3">
+                            <label >Password</label>
+                            {{ form.password }}
+                        </div>
+                          {%if form.errors or form.non_field_errors %}
+                            <div class="mb-3 p-6 bg-warning rounded">
+                              {% for field in form%}
+                                  {{form.errors}}
+                               {%endfor%}
+                                {{form.non_field_error}}
+                            </div>
+                         {%endif%}
+                        
+                         <br>
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

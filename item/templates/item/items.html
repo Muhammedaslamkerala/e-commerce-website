@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+
+{% block title%}Items{% endblock%}
+
+{% block content %}
+     <div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 ">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+               
+                <form method="get" action="{% url 'item:items' %}">
+                 
+                  <div class="input-group">
+                  <input name="query" class="form-control border-end-0 border rounded-pill" type="text" value="{{ query }}" placeholder="Find a bike, a chair or a car">
+                  
+                  <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="submit" >
+                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                   </svg>
+                  </button>
+                  </div>
+              </form>
+                  
+                 
+                    <p class='text-bg-light '>Categories</p>
+                    <hr>
+                              <ul >
+                             {% for category in categories %}
+                             
+                              <li class="w-100 {% if category.id == category_id%} {% endif %}">
+                                 <a href="{% url 'item:items'%}?query={{ query }}&category={{category.id}}" class="nav-link px-0 link-primary"> {{category.name}}</a>
+                              </li>
+                            
+                              {% endfor %}
+                          </ul>
+                          <hr>
+                          <a href="{%url 'item:items'%}">clear</a>
+                
+                
+            </div>
+        </div>
+        <div class="col py-3 text-bg-light">
+             <div class="container-fluid">
+        <div class="row">
+            {% for item in items %}
+            <div class="col-md-4 ">
+            <a href="{% url 'item:detail' item.id %}">
+                <div class="card m-3" style="width: 18rem;">
+                   
+                    <img src="{{ item.image.url }}" class="card-img-top" alt="..." width="250px" height="250px" >
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ item.name }}</h5>
+                        <p class="card-text">Price: {{ item.price }}</p>
+                        <a href="{% url 'item:detail' item.id %}" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
